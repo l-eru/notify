@@ -1,0 +1,17 @@
+{
+    "name": "l-eru/notify",
+    "description": "swoole http server hot update",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "L-eru",
+            "email": "L.eru.ninja@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+    	"psr-4": {
+	    "L\\": "src"
+	}
+    }
+}
