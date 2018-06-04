@@ -7,9 +7,11 @@ require [php-inotify](http://pecl.php.net/package/inotify)
 Install
 =======================
 
-1. download the src/Notify.php and include it in your php file;
++ You can download the src/Notify.php and include it in your php file;
 
-2. using composer
+Or
+
++ using composer
 
 	+ add vcs in your *composer.json*
 	```json
