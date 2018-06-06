@@ -41,7 +41,7 @@ How To Use?
 ```php
 $server = new Swoole\Http\Server('0.0.0.0', 9501);
 
-$server->on('workerStart', function ($server)) {
+$server->on('start', function ($server)) {
     
     /**
      * when you changed the file in your app path,
