@@ -30,9 +30,9 @@ class Notify
             inotify_add_watch($this->fd, $pathname, IN_ATTRIB|IN_CREATE|IN_DELETE|IN_MOVE);
 
             while ($fileName = $dir->read()) {
-                if ($fileName === '.' || $fileName === '..' || !is_dir($dir->path . '/' . $fileName)) continue;
+                if ($fileName === '.' || $fileName === '..' || !is_dir($dir->path . DIRECTORY_SEPARATOR . $fileName)) continue;
 
-                $this->watch($dir->path . '/' . $fileName);
+                $this->watch($dir->path . DIRECTORY_SEPARATOR . $fileName);
             }
         }
     }
