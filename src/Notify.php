@@ -52,7 +52,9 @@ class Notify
                     }
                 }
 
+                echo '>>>------swoole server prepare to reload------[' , date('Y-m-d H:i:s') , ']' , PHP_EOL;
                 $server->reload();
+                echo '<<<------swoole reload finish------------------' . PHP_EOL;
             }
         });
     }
