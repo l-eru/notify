@@ -14,8 +14,6 @@ class Notify
     const IN_MASK_DELETE = 512;
 
     protected $fd;
-    protected $pathname;
-
     protected $pathLists;
 
     public function __construct()
@@ -77,7 +75,7 @@ class Notify
     {
         if (empty($this->pathLists)) return;
 
-        foreach ($pathLists as $path) {
+        foreach ($this->pathLists as $path) {
             $this->watch($path);
         }
 
