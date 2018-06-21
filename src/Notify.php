@@ -6,7 +6,7 @@ use Swoole\Event;
 use Swoole\Server;
 
 /**
- *
+ * 
  */
 class Notify
 {
@@ -16,13 +16,43 @@ class Notify
     protected $fd;
     protected $pathname;
 
-    public function __construct($pathname)
+    protected $pathLists;
+
+    public function __construct()
     {
         $this->fd = inotify_init();
-        $this->pathname = $pathname;
     }
 
-    protected function watch($pathname) 
+
+    /**
+     * add your path you want to listen
+     *
+     * <code>
+     * # add one file
+     * add('/path/to');
+     *
+     * # add multi files
+     * add([
+     *   '/path/to/1',
+     *   '/path/to/2',
+     *   ...,
+     *   '/path/to/N',
+     * ]);
+     * </code>
+     *
+     */ 
+    public function add($pathname)
+    {
+        if (is_array($pathname)) {
+            foreach ($pathname as $path) {
+                $this->pathLists[] = $path;
+            }
+        } elseif (is_string($pathname)) {
+            $this->pathLists[] = $pathname;
+        }
+    }
+
+    protected function watch(string $pathname) 
     {
         if (is_dir($pathname)) {  
             $dir = dir($pathname);    
@@ -37,12 +67,19 @@ class Notify
         }
     }
 
- 	/**
+    /**
+     * You must use add function to add path,
+     * if path is empty, it is not working!
+     *
      * @param  Server $server
      */
-    public function addEvent(Server $server)
+    public function listen(Server $server)
     {
-        $this->watch($this->pathname);
+        if (empty($this->pathLists)) return;
+
+        foreach ($pathLists as $path) {
+            $this->watch($path);
+        }
 
         Event::add($this->fd, function () use ($server){
             while($events = inotify_read($this->fd)) {
@@ -52,9 +89,9 @@ class Notify
                     }
                 }
 
-                echo '>>>------swoole server prepare to reload------[' , date('Y-m-d H:i:s') , ']' , PHP_EOL;
+                echo '>>>[' . date('Y-m-d H:i:s') . ']' . '------swoole server prepare to reload--------' .  PHP_EOL;
                 $server->reload();
-                echo '<<<------swoole reload finish------------------' . PHP_EOL;
+                echo '<<<------swoole server reload finish-----------------------------------------------' . PHP_EOL;
             }
         });
     }

@@ -48,8 +48,9 @@ $server->on('start', function ($server)) {
      * swoole http server reload.
      * 
      */
-    $notify = new L\Notify($yourAppPath);
+    $notify = new L\Notify();
     
-    $notify->addEvent($server);
+    $notify->add($yourPathName);
+    $notify->listen($server);
 });
 ```
