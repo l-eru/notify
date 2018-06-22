@@ -16,9 +16,13 @@ class Notify
     protected $fd;
     protected $pathLists;
 
-    public function __construct()
+    public function __construct($pathname = null)
     {
         $this->fd = inotify_init();
+
+        if ($pathname) {
+            $this->add($pathname);
+        }
     }
 
 
